@@ -1,17 +1,16 @@
-import logo from './logo.svg';
 import './App.css';
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
+import Home from "./pages/Home.js"
 import './App.css';
-import Home from "./components/home/Home.js"
 
 function App() {
   return (
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />      
-        </Routes>
-      </Router>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </Router>       
   );
 }
 
