@@ -6,7 +6,7 @@ import {
 } from "./styles";
 import { IoMdArrowDropleft, IoMdBookmark } from "react-icons/io";
 import { AppContext } from "../provider/AppProvider";
-             
+import LinkAccount from '../linkToAccount/LinkAccount';
 
 
 
@@ -82,6 +82,9 @@ function SideBarF() {
           </SButtonFav>
 
         </div>
+
+        <LinkAccount />
+
       </Sidebar>
 
     
