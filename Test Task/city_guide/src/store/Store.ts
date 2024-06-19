@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-
+import { createContext} from 'react';
 
 export default class Store {
   isAuth = false;
