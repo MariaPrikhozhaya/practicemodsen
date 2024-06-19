@@ -12,6 +12,7 @@ const containerStyle = {
 
   const MapF = () => {
     const [userLocation, setUserLocation] = useState(null);
+    // @ts-expect-error TS(2339): Property 'searchAddress' does not exist on type '{... Remove this comment to see the full error message
     const { searchAddress, radius } = useContext(AppContext);
   
     const getCoordinatesFromAddress = async () => {
@@ -67,12 +68,15 @@ const containerStyle = {
             center: userLocation,
             zoom: 16,
             // Опция "on" позволяет реагировать на изменение userLocation
+            // @ts-expect-error TS(2322): Type '{ center: any; zoom: number; on: { userLocat... Remove this comment to see the full error message
             on: {
               userLocationChange: (event) => {
+                // @ts-expect-error TS(2532): Object is possibly 'undefined'.
                 this.setState({ center: event.value });
               },
             },
           }}
+          // @ts-expect-error TS(2322): Type '{ width: string; height: string; position: s... Remove this comment to see the full error message
           style={containerStyle}
         >
           {userLocation && (

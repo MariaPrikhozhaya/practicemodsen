@@ -22,12 +22,11 @@ const plugins = [
 module.exports = {
   mode, // Сокращенная запись mode: mode в ES6+
   target,
-  entry: './src/index.js',
+  entry: './src/index.tsx', 
   devtool: 'source-map',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    assetModuleFilename: 'assets/[hash][ext][query]', // Все ассеты будут
-    // складываться в dist/assets
+    assetModuleFilename: 'assets/[hash][ext][query]', 
     clean: true,
   },
   
@@ -35,11 +34,15 @@ module.exports = {
     hot: true,
   },
 
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'], 
+  },
+
   module: {
     rules: [
-      { test: /\.(html)$/, use: ['html-loader'] },// Добавляем загрузчик для html
+      { test: /\.(html)$/, use: ['html-loader'] },
       {
-        test: /\.(s[ac]|c)ss$/i, // /\.(le|c)ss$/i если вы используете less
+        test: /\.(s[ac]|c)ss$/i, 
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
@@ -49,26 +52,25 @@ module.exports = {
       }, // Добавляем загрузчики стилей
       {
         test: /\.(png|jpe?g|gif|svg|webp|ico)$/i,
-        type: mode === 'production' ? 'asset' : 'asset/resource', // В продакшен режиме
-        // изображения размером до 8кб будут инлайнится в код
-        // В режиме разработки все изображения будут помещаться в dist/assets
+        type: mode === 'production' ? 'asset' : 'asset/resource', 
       },
       {
         test: /\.(woff2?|eot|ttf|otf)$/i,
         type: 'asset/resource',
       },
       {
-        test: /\.js$/,
-        exclude: /node_modules/, // не обрабатываем файлы из node_modules
+        test: /\.tsx?$/, 
+        exclude: /node_modules/, 
         use: {
           loader: 'babel-loader',
           options: {
             cacheDirectory: true, // Использование кэша для избежания рекомпиляции
             // при каждом запуске
             presets: [
-              '@babel/preset-env', // You already have this one
+              '@babel/preset-env', 
               '@babel/preset-react',
-            ], // Правильно определяем presets
+              '@babel/preset-typescript', 
+            ], 
           },
         },
       },
