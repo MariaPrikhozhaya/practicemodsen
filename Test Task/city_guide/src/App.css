@@ -67,15 +67,15 @@
 
 .app {
   display: flex;
+  height: 100vh;
 }
 
 .sidebar-1 {
-  height: 100vh;
   background-color: #fff;
   padding: 25px;
   z-index: 2;
   text-align: center;
-  margin: auto;
+  position: relative;
   box-shadow: 2px 0 1px rgba(0, 0, 0, 0.1);
 }
 
@@ -86,8 +86,6 @@
   position: relative;
   transition: left 0.4s ease;
   z-index: 1;
-  height: 100vh;
-  
 }
 
 .sidebar-3 {
@@ -177,5 +175,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  bottom: 0;
+  /* bottom: 0; */
+  position: absolute;
+  bottom: 50px;
 }
