@@ -1,12 +1,15 @@
 import { Sidebar } from 'flowbite-react';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
-import { MdOutlineFavorite } from "react-icons/md";
 import {
   SSearch, SSearchIcon, SButtonSearch, SButtonFav
 } from "./styles";
-import { IoMdArrowDropleft } from "react-icons/io";
+import { IoMdArrowDropleft, IoMdBookmark } from "react-icons/io";
+import { AppContext } from "../provider/AppProvider";
              
+
+
+
 function SideBarF() {
   const [isSidebarOpenSearch, setIsSidebarOpenSearch] = useState(false);
   const [isSidebarOpenFav, setIsSidebarOpenFav] = useState(false);
@@ -34,6 +37,27 @@ function SideBarF() {
     }
   };
 
+  const { searchAddress, setSearchAddress } = useContext(AppContext);
+  const { radius, setRadius } = useContext(AppContext);
+
+  
+  // Function to handle search input change
+  const handleInputChange = (e) => {
+    setSearchAddress(e.target.value);
+    console.log(searchAddress);
+  };
+
+  const handleInputRadius = (e) => {
+    if (e.key === "-" || e.key === "+") {
+      e.preventDefault(); // Предотвращает ввод знаков "-" и "+"
+    }
+    setRadius(e.target.value);
+  };
+
+  const handleButtonClick = (e) => {
+    
+  };
+
   return (
     <div className="app">
 
@@ -52,27 +76,27 @@ function SideBarF() {
               style={!isSidebarOpenFav ? { backgroundColor: `#C75E5E`, color: `#fff`, border: `3px solid #C75E5E` } : {
                 backgroundColor: `#fff`, color: `#C75E5E`, border: `3px solid #C4C4C4`
             }}>
-            <MdOutlineFavorite />
+            <IoMdBookmark />
           </SButtonFav>
 
         </div>
       </Sidebar>
 
     
-
       <div className={`sidebar-2 ${isSidebarOpenSearch ? 'open' : ''}`}>
         <div className="inside">
           <SSearch>
             <SSearchIcon>
               <HiMiniMagnifyingGlass />
             </SSearchIcon>
-            <input
-              placeholder="Место, адрес.."
-            />
+            <input type="text" placeholder="Место, адрес.." value={searchAddress} onChange={handleInputChange}/>
           </SSearch>
           <p className="text_radius">В радиусе</p>
-          <input className="input_radius" id="number" type="number" /> <text className="text_km">км</text>
-          
+          <input className="input_radius" id="number" 
+          type="number" value={radius} onChange={handleInputRadius} min={0}/> <text className="text_km">км</text>
+          <button className="find_btn" onClick={handleButtonClick}>
+            <HiMiniMagnifyingGlass />
+          </button>
         </div>
 
         <button className="btn_close" onClick={handleCloseSidebar}> 
@@ -80,15 +104,15 @@ function SideBarF() {
         </button>
       </div>
 
+
+
       <div className={`sidebar-3 ${isSidebarOpenFav ? 'open' : ''}`}>
         <div className="inside">
           <SSearch>
           <SSearchIcon>
             <HiMiniMagnifyingGlass />
           </SSearchIcon>
-          <input
-            placeholder="Место, адрес.."
-          />
+          <input type="text" placeholder="Место, адрес.." value={searchAddress} onChange={handleInputChange}/>
         </SSearch>
         </div>
 

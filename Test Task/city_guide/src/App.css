@@ -105,7 +105,7 @@
 }
 
 .sidebar-3.open {
-  left: -425px;
+  left: -398px;
 }
 
 .logo img {
@@ -142,10 +142,10 @@
   color: #fff;
 } */
 
-.icons {
+/* .icons {
   display: flex;
   flex-direction: column;
-}
+} */
 
 .btn_close {
   width: 45px;
@@ -162,4 +162,20 @@
   display: flex;
   justify-content: center;
   align-items: center; 
+}
+
+.find_btn {
+  width: 300px;
+  height: 40px;
+  cursor: pointer;
+  border: none;
+  background-color: #5E7BC7;
+  border-radius: 6px;
+  border: 3px solid #5E7BC7;
+  color: #fff;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 0;
 }

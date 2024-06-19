@@ -69,14 +69,14 @@ export const SSearch = styled.div`
     background: rgba(250,250,250,.3);
     border: 2px solid #C4C4C4;
     border-radius: 6px;
+    width: 300px;
+    height: 40px;
     input {
         border-radius: 6px;
         padding: 0 16px;
         font-family: inherit;
         letter-spacing: inherit;
         font-size: 16px;
-        width: 240px;
-        height: 40px;
         outline: none;
         border: none;
         color: inherit;
