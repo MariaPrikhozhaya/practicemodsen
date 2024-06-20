@@ -26,12 +26,14 @@ module.exports = {
   devtool: 'source-map',
   output: {
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
     assetModuleFilename: 'assets/[hash][ext][query]', 
     clean: true,
   },
   
   devServer: {
     hot: true,
+    historyApiFallback: true, // Включает обработку истории для одностраничных приложений
   },
 
   resolve: {

@@ -5,13 +5,12 @@ import { StoreContext } from "../../context/State"
 const Logout = () => {
 
 	const navigate = useNavigate()
+	const { store } = useContext(StoreContext);
 
 	const handleLogout = () => {
         store.logout();
 		navigate("/", { state: { message: "You have been logged out!"} })
 	}
-
-    const { store } = useContext(StoreContext);
 
 	return (
 		<>
