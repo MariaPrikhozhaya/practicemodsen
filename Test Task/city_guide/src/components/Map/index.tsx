@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext } from "react";
 import { YMaps, Map, Placemark, Circle} from '@pbe/react-yandex-maps';
-import { AppContext } from "../provider/AppProvider";
+import { AppContext } from "../Provider";
 
 const containerStyle = {
     width: '100vw',
@@ -31,6 +31,23 @@ const containerStyle = {
         console.error('Error getting coordinates:', error);
       }
     };
+
+
+    // const [cafes, setCafes] = useState([]);
+
+    // useEffect(() => {
+    //   fetchCafes();
+    // }, []);
+
+
+    // const fetchCafes = async () => {
+    //   const response = await fetch(
+    //     `https://search-maps.yandex.ru/v1/search?apikey=d40d7ec9-f5ab-4c2d-8515-179c8f0fadd5&text=кафе&lang=ru_RU&ll=${userLocation.join(',')}&rspn=1`
+    //   );
+    //   const data = await response.json();
+    //   setCafes(data.features);
+    // };
+
   
     useEffect(() => {
       if (searchAddress) {
@@ -111,6 +128,18 @@ const containerStyle = {
               />
             </>
           )}
+
+        {/* {cafes.map((cafe) => (
+          <Placemark
+            key={cafe.id}
+            geometry={[cafe.geometry.coordinates[1], cafe.geometry.coordinates[0]]} 
+            options={{
+              iconLayout: 'default#image',
+              iconImageHref: 'https://i.ibb.co/r0QJ7QK/2.png', 
+              iconImageSize: [32, 24],
+            }}
+          />
+        ))} */}
         </Map>
       </YMaps>
     );

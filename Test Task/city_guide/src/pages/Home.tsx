@@ -1,6 +1,6 @@
 import React from "react";
-import SidebarF from "../components/common/SidebarF";
-import MapF from "../components/map/MapF";
+import SidebarF from "../components/Sidebar";
+import MapF from "../components/Map";
 
 const Home = () => {
   

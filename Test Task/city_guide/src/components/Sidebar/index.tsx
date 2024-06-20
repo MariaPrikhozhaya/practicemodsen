@@ -5,9 +5,9 @@ import {
   SSearch, SSearchIcon, SButtonSearch, SButtonFav
 } from "./styles";
 import { IoMdArrowDropleft, IoMdBookmark } from "react-icons/io";
-import { AppContext } from "../provider/AppProvider";
-import LinkAccount from '../linkToAccount/LinkAccount';
-
+import { AppContext } from "../Provider";
+import LinkAccount from '../LinkToAccount';
+import CategoryList from '../ListOfCategories';
 
 
 function SideBarF() {
@@ -90,6 +90,10 @@ function SideBarF() {
             </SSearchIcon>
             <input type="text" placeholder="Место, адрес.." value={searchAddress} onChange={handleInputChange}/>
           </SSearch>
+          <p className="text_find">Искать</p>
+          
+          {/* <CategoryList /> */}
+          
           <p className="text_radius">В радиусе</p>
           <input className="input_radius" id="number" 
           type="number" value={radius} onChange={handleInputRadius} min={0}/> <text className="text_km">км</text>

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { StoreContext } from "../context/State"
-import AuthForm from "../components/authForm/AuthForm"
+import AuthForm from "../components/AuthForm"
 
 const Login = () => {
 
