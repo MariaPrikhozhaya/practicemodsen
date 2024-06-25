@@ -38,11 +38,19 @@ module.exports = {
 
   resolve: {
     extensions: ['.tsx', '.ts', '.js'], 
+    alias: {
+      '@assets': path.resolve(__dirname, 'src/assets') 
+    }
   },
+
 
   module: {
     rules: [
       { test: /\.(html)$/, use: ['html-loader'] },
+      {
+        test: /\.svg$/,
+        use: ['@svgr/webpack'],
+      },
       {
         test: /\.(s[ac]|c)ss$/i, 
         use: [

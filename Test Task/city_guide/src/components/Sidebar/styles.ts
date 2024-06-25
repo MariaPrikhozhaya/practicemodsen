@@ -5,7 +5,6 @@ export const SSearch = styled.div`
     background: rgba(250,250,250,.3);
     border: 2px solid #C4C4C4;
     border-radius: 6px;
-    width: 300px;
     height: 40px;
     input {
         border-radius: 6px;
@@ -36,7 +35,7 @@ export const SButtonSearch = styled.button`
     cursor: pointer;
     background-color: ${ props => (!props.open ? `#5E7BC7` : `#fff`)};
     color: ${ props => (!props.open ? `#fff` : `#5E7BC7`)};
-    border: ${ props => (!props.open ? `3px solid #5E7BC7` : `3px solid #C4C4C4`)};
+    border: ${ props => (!props.open ? `2px solid #5E7BC7` : `2px solid #C4C4C4`)};
     margin-bottom: 15px;
     font-size: 24px;
     display: flex;
@@ -52,7 +51,7 @@ export const SButtonFav = styled.button`
     cursor: pointer;
     background-color: ${ props => (!props.open ? `#C75E5E` : `#fff`)};
     color: ${ props => (!props.open ? `#fff` : `#C75E5E`)};
-    border: ${ props => (!props.open ? `3px solid #C75E5E` : `3px solid #C4C4C4`)};
+    border: ${ props => (!props.open ? `2px solid #C75E5E` : `2px solid #C4C4C4`)};
     font-size: 24px;
     display: flex;
     justify-content: center;

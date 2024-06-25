@@ -1,31 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { categories } from '../../constants/categories';
+import {
+  SList, SLi, SAvatar, SBlock
+} from "./styles";
+import { useAppDispatch } from '../../hooks/redux';
+import { setSelectedCategories } from '../../store/reducers/geoObjects';
+
+
+
 
 const CategoryList = () => {
-  const [selectedCategory, setSelectedCategory] = useState(0);
 
-  const handleCategoryChange = (index) => {
-    setSelectedCategory(index);
+  const dispatch = useAppDispatch()
+  const [filterCategories, setFilterCategories] = useState([]);
+
+  useEffect(() => {
+      setFilterCategories(categories);
+  }, [categories]);
+
+  const handleClick = (index: number) => {
+    setFilterCategories(
+        filterCategories.map((el, i) =>
+            i === index ? { ...el, isSelected: !el.isSelected } : el
+        )
+    );
   };
 
+  useEffect(() => {
+    dispatch(setSelectedCategories(filterCategories.filter(el => el.isSelected)));
+}, [filterCategories])
+
   return (
-    <div className='cat'>
-      <ul>
-        {categories.map((category, index) => (
-          <li
-            key={index}
-            className={index === selectedCategory ? 'selected' : ''}
-            onClick={() => handleCategoryChange(index)}
-            style={{ cursor: 'pointer' }}
-          >
-            <>
-                <img src={category.icon} alt={category.text} />
-                {category.text}
-              </>
-          </li>
+    <SBlock>
+      <SList>
+        {filterCategories.map((category, index) => (
+          <SLi isSelected={category.isSelected} onClick={() => handleClick(index)}>
+            <SAvatar src={category.icon}/> {category.text}
+          </SLi>
         ))}
-      </ul>
-    </div>
+      </SList>
+    </SBlock>
   );
 };
 

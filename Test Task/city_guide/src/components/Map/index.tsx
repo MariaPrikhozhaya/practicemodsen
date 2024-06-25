@@ -1,6 +1,9 @@
 import React, {useState, useEffect, useContext } from "react";
 import { YMaps, Map, Placemark, Circle} from '@pbe/react-yandex-maps';
 import { AppContext } from "../Provider";
+import { useLocation } from "../../hooks/useLocation";
+
+import place from '@assets/vec.png';
 
 const containerStyle = {
     width: '100vw',
@@ -11,76 +14,33 @@ const containerStyle = {
 
   const MapF = () => {
     
-    const [userLocation, setUserLocation] = useState(null);
+    const [places, setPlaces] = useState([]);
+    const {userLocation, error} = useLocation();
     // @ts-expect-error TS(2339): Property 'searchAddress' does not exist on type '{... Remove this comment to see the full error message
-    const { searchAddress, radius } = useContext(AppContext);
-  
-    const getCoordinatesFromAddress = async () => {
+    const { radius } = useContext(AppContext);
+
+    const fetchPlaces = async () => {
       try {
-        if (searchAddress) {
-          const response = await fetch(
-            `https://geocode-maps.yandex.ru/1.x/?apikey=d40d7ec9-f5ab-4c2d-8515-179c8f0fadd5&format=json&geocode=${searchAddress}`
-          );
-          const data = await response.json();
-          const coordinates = data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(
-            ' '
-          );
-          setUserLocation([parseFloat(coordinates[1]), parseFloat(coordinates[0])]);
-        }
+        const response = await fetch(
+          `https://search-maps.yandex.ru/v1/?text=Аптека&lang=ru_RU&ll=27.446775,53.908177&apikey=860e4b4c-a113-40c5-b8d4-d9656e926e1d&rspn=20`
+        );
+        const data = await response.json();
+        console.log(data);
+        setPlaces(data.features);
       } catch (error) {
-        console.error('Error getting coordinates:', error);
+        console.error("Error fetching cafes:", error);
       }
     };
-
-
-    // const [cafes, setCafes] = useState([]);
-
-    // useEffect(() => {
-    //   fetchCafes();
-    // }, []);
-
-
-    // const fetchCafes = async () => {
-    //   const response = await fetch(
-    //     `https://search-maps.yandex.ru/v1/search?apikey=d40d7ec9-f5ab-4c2d-8515-179c8f0fadd5&text=кафе&lang=ru_RU&ll=${userLocation.join(',')}&rspn=1`
-    //   );
-    //   const data = await response.json();
-    //   setCafes(data.features);
-    // };
-
+  
   
     useEffect(() => {
-      if (searchAddress) {
-        getCoordinatesFromAddress();
-      } else {
-        geoFindMe();
-      }
-    }, [searchAddress]);
-  
+      fetchPlaces();
+    }, []);
 
 
-    function geoFindMe() {
-      function success(position) {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-        setUserLocation([latitude, longitude]);
-      }
-  
-      function error() {
-        console.log('Невозможно получить ваше местоположение');
-      }
-  
-      if (!navigator.geolocation) {
-        console.log('Geolocation не поддерживается вашим браузером');
-      } else {
-        navigator.geolocation.getCurrentPosition(success, error);
-      }
-    }
-  
     return (
       <YMaps>
         <Map
-          // Центрировать карту по умолчанию на выбранной точке
           state={{
             center: userLocation,
             zoom: 16,
@@ -97,15 +57,15 @@ const containerStyle = {
           style={containerStyle}
         >
           {userLocation && (
-            <>
               <Placemark
                 geometry={userLocation}
                 options={{
                   iconLayout: 'default#image',
-                  iconImageHref: 'https://i.ibb.co/r0QJ7QK/2.png',
+                  iconImageHref: place,
                   iconImageSize: [32, 24],
                 }}
               />
+          )}
               <Circle
                 geometry={[userLocation, radius*1000]}
                 options={{
@@ -126,20 +86,18 @@ const containerStyle = {
                   strokeWidth: 0,
                 }}
               />
-            </>
-          )}
 
-        {/* {cafes.map((cafe) => (
+        {places.map((place) => (
           <Placemark
-            key={cafe.id}
-            geometry={[cafe.geometry.coordinates[1], cafe.geometry.coordinates[0]]} 
+            key={place.id}
+            geometry={[place.geometry.coordinates[1], place.geometry.coordinates[0]]} 
             options={{
               iconLayout: 'default#image',
-              iconImageHref: 'https://i.ibb.co/r0QJ7QK/2.png', 
+              iconImageHref: 'https://pngicon.ru/file/uploads/vinni-pukh-v-png.png', 
               iconImageSize: [32, 24],
             }}
           />
-        ))} */}
+        ))}
         </Map>
       </YMaps>
     );

@@ -8,6 +8,8 @@ import { IoMdArrowDropleft, IoMdBookmark } from "react-icons/io";
 import { AppContext } from "../Provider";
 import LinkAccount from '../LinkToAccount';
 import CategoryList from '../ListOfCategories';
+import logo from '@assets/logo.png';
+import Card from '../Card';
 
 
 function SideBarF() {
@@ -64,7 +66,7 @@ function SideBarF() {
     <div className="app">
 
       <Sidebar className="sidebar-1">
-        <Sidebar.Logo className="logo" href="/" img="https://ltdfoto.ru/images/2024/06/17/Group.png" imgAlt="logo"></Sidebar.Logo>
+        <Sidebar.Logo className="logo" href="/" img={logo} imgAlt="logo"></Sidebar.Logo>
         <div className='icons'>
 
           <SButtonSearch onClick={handleOpenSidebarSearch} open={isSidebarOpenSearch}>
@@ -92,7 +94,7 @@ function SideBarF() {
           </SSearch>
           <p className="text_find">Искать</p>
           
-          {/* <CategoryList /> */}
+          <CategoryList />
           
           <p className="text_radius">В радиусе</p>
           <input className="input_radius" id="number" 
@@ -117,6 +119,10 @@ function SideBarF() {
           </SSearchIcon>
           <input type="text" placeholder="Место, адрес.." value={searchAddress} onChange={handleInputChange}/>
         </SSearch>
+        <p className="text_search">Избранное:</p>
+          <div>
+            <Card />
+      </div>
         </div>
 
         <button className="btn_close" onClick={handleCloseSidebar}>

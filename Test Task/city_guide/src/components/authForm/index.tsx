@@ -1,27 +1,41 @@
 import React, { useState, useContext} from "react"
-import { StoreContext } from "../../context/State"
 import { SInput, SBlock, SButton,  SForm, STitle, 
 	SMainBlock, SText, SLink, SRow, SMdArrowBack } from "./styles"
+import { useDispatch } from "react-redux";
+import { setUser } from "../../store/reducers/userSlice";
+import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+
 
 const AuthForm = () => {
 
-    const [login, setLogin] = useState({
-		email: "",
-		password: ""
-	})
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 
-	const { store } = useContext(StoreContext);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
-	const handleInputChange = (e) => {
-		setLogin({ ...login, [e.target.name]: e.target.value })
-	}
+	const handleLogin = (email: string, password: string) => {
+		const auth = getAuth();
+		signInWithEmailAndPassword(auth, email, password)
+		.then(({user}) => {
+		  console.log(user);
+		  dispatch(setUser({
+			id: user.uid,
+			email: user.email,
+			token: user.refreshToken,
+		  }));
+		  navigate('/');
+		})
+		.catch(() => alert('Invalid user!'));
+	  }
 
-    const handleLogin = () => {
-		store.login(login.email, login.password);
-	}
 	return (
 			<SMainBlock>
-				<SForm onSubmit={handleLogin}>
+				<SForm onSubmit={(e) => {
+          e.preventDefault();
+          handleLogin(email, password);
+        }}>
 					<SRow>
 						<SLink to={"/"}><SMdArrowBack /></SLink>
 						<STitle>Вход</STitle>
@@ -32,16 +46,16 @@ const AuthForm = () => {
 							name="email"
 							type="email"
 							placeholder="email"
-							value={login.email}
-							onChange={handleInputChange}
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
 						/>
 						<SInput
 							id="password"
 							name="password"
 							type="password"
 							placeholder="пароль"
-							value={login.password}
-							onChange={handleInputChange}
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
 						/>
 						<SButton type="submit">Войти</SButton>
 					</SBlock>
