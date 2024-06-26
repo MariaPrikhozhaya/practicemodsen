@@ -1,45 +1,60 @@
-import styled from 'styled-components';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
+import styled from "styled-components";
+import { Card, CardContent, CardHeader, CardMedia, IconButton, Typography, CardActions } from '@mui/material';
 
-
-export const SCard = styled(Card)`
-  border: 1px solid #ccc;
-  border-radius: 24px;
-  padding: 20px;
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
-  &:hover {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
-  }
+export const SCard = styled.div`
+    border: 2px solid #C4C4C4;
+    border-radius: 6px;
+    width: 264px;
+    margin-bottom: 15px;
+  
 `;
 
-export const SCardHeader = styled.h2`
-  margin-bottom: 10px;
-  font-size: 1.5rem;
-  color: #333;
+export const SDiv = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 `;
 
-export const SCardContent = styled.p`
-  margin: 0;
-  line-height: 1.6;
+export const SCardMedia = styled(CardMedia)`
+    border-radius: 6px;
+    height: 80px;
+    max-width: 100px;
+    margin-right: 10px;
 `;
 
-export const SCardButton = styled.button`
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
+export const SCardHeader = styled.p`
+    max-width: 120px;
+    font-size: 12px;
+    font-weight: 500;
+`;
 
-  &:hover {
-    background-color: #0056b3;
-  }
+export const SText = styled.p`
+    font-size: 10px;
+    justify-content: space-between;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`;
+
+export const SIconButtonFav = styled(IconButton)`
+    svg {
+        color: #C75E5E;
+    }
+`;
+
+export const SIconButtonArrow = styled(IconButton)`
+    svg {
+        color: #373737;
+    }
+`;
+
+export const SCardActions = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;
+
+export const SCardContent = styled.div`
+    padding: 10px 10px 0 10px;
 `;

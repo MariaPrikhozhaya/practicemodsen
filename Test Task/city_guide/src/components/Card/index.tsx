@@ -1,22 +1,39 @@
-import React, {useState} from "react";
+import React from 'react';
 import {
-    SCard, SCardHeader, SCardContent, SCardButton
-  } from "./styles";
-
+    SCard, SCardMedia, SText, SDiv, SCardHeader, 
+    SIconButtonFav, SIconButtonArrow, SCardActions, SCardContent
+} from "./styles";
+import { IoMdArrowDropright, IoMdBookmark } from "react-icons/io";
 
 const Card = () => {
 
-    return (
-        <SCard>
-            <SCardHeader>Заголовок карточки</SCardHeader>
-            <SCardContent>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                consequat, ante id maximus efficitur, felis sem commodo massa, id
-                laoreet odio lectus at turpis.
-            </SCardContent>
-            <SCardButton>Подробнее</SCardButton>
-        </SCard>
-    )
+  const handleBtnClick = () => {
+    
   };
 
-  export default Card;
+  return (
+    <SCard>
+      <SCardContent>
+            <SDiv>
+                <SCardMedia
+                    component="img"
+                    image="https://masterpiecer-images.s3.yandex.net/c352b1b9801c11ee9607720ccb3e265f:upscaled"
+                />
+                <SCardHeader>Фантаcмагарический музей им. П.М. Машерова</SCardHeader>
+            </SDiv>
+            <SText>Lörem ipsum jere. Intrabel peraktiv pävufåsk läslov pide. Exon prelogi. 
+                Någonstansare  begöpp. Homoadoption tesände keck såsom köttrymden. Epigen digon fast</SText>
+      </SCardContent>
+      <SCardActions>
+        <SIconButtonFav>
+          <IoMdBookmark />
+        </SIconButtonFav>
+        <SIconButtonArrow onClick={handleBtnClick}>
+          <IoMdArrowDropright />
+        </SIconButtonArrow>
+      </SCardActions>
+    </SCard>
+  );
+}
+
+export default Card;

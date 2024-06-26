@@ -57,3 +57,10 @@ export const SButtonFav = styled.button`
     justify-content: center;
     align-items: center; 
 `;
+
+export const SCards = styled.div`
+    overflow-y: auto; /* Включаем прокрутку по вертикали */
+    scrollbar-width: none; /* Скрываем полосу прокрутки */
+    height: 560px;
+`;
+

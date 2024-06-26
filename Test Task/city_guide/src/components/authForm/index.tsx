@@ -33,9 +33,9 @@ const AuthForm = () => {
 	return (
 			<SMainBlock>
 				<SForm onSubmit={(e) => {
-          e.preventDefault();
-          handleLogin(email, password);
-        }}>
+          			e.preventDefault();
+          			handleLogin(email, password);
+        		}}>
 					<SRow>
 						<SLink to={"/"}><SMdArrowBack /></SLink>
 						<STitle>Вход</STitle>

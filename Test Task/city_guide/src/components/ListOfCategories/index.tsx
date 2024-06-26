@@ -27,6 +27,7 @@ const CategoryList = () => {
   };
 
   useEffect(() => {
+    console.log(setSelectedCategories(filterCategories.filter(el => el.isSelected)));
     dispatch(setSelectedCategories(filterCategories.filter(el => el.isSelected)));
 }, [filterCategories])
 

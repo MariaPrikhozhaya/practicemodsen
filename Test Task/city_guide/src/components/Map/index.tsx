@@ -1,9 +1,9 @@
 import React, {useState, useEffect, useContext } from "react";
-import { YMaps, Map, Placemark, Circle} from '@pbe/react-yandex-maps';
-import { AppContext } from "../Provider";
+import { YMaps, Map, Placemark, Circle, RoutePanel} from '@pbe/react-yandex-maps';
 import { useLocation } from "../../hooks/useLocation";
 
 import place from '@assets/vec.png';
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
 const containerStyle = {
     width: '100vw',
@@ -11,18 +11,22 @@ const containerStyle = {
     position: 'absolute',
   };
 
+const API_KEY = '860e4b4c-a113-40c5-b8d4-d9656e926e1d';
 
   const MapF = () => {
     
     const [places, setPlaces] = useState([]);
     const {userLocation, error} = useLocation();
-    // @ts-expect-error TS(2339): Property 'searchAddress' does not exist on type '{... Remove this comment to see the full error message
-    const { radius } = useContext(AppContext);
+    const geoObjects = useAppSelector(state => state.geoObjectsReducer);
+    const dispatch = useAppDispatch();
 
+    
     const fetchPlaces = async () => {
+      console.log(geoObjects.geoObjects);
+      console.log(geoObjects.selectedCategories);
       try {
         const response = await fetch(
-          `https://search-maps.yandex.ru/v1/?text=Аптека&lang=ru_RU&ll=27.446775,53.908177&apikey=860e4b4c-a113-40c5-b8d4-d9656e926e1d&rspn=20`
+          `https://search-maps.yandex.ru/v1/?text=${geoObjects.selectedCategories.join(', ')}&lang=ru_RU&ll=${userLocation[1]},${userLocation[0]}&apikey=${API_KEY}&spn=1000`
         );
         const data = await response.json();
         console.log(data);
@@ -32,15 +36,16 @@ const containerStyle = {
       }
     };
   
-  
     useEffect(() => {
       fetchPlaces();
-    }, []);
+  }, [geoObjects.radius]);
+  
+
 
 
     return (
       <YMaps>
-        <Map
+        <Map 
           state={{
             center: userLocation,
             zoom: 16,
@@ -67,7 +72,7 @@ const containerStyle = {
               />
           )}
               <Circle
-                geometry={[userLocation, radius*1000]}
+                geometry={[userLocation, geoObjects.radius*1000]}
                 options={{
                   draggable: false,
                   fillColor: '#5E7BC7',
@@ -78,7 +83,7 @@ const containerStyle = {
                 }}
               />
               <Circle
-                geometry={[userLocation, radius*100]}
+                geometry={[userLocation, geoObjects.radius*100]}
                 options={{
                   draggable: false,
                   fillColor: '#5E7BC7',
@@ -93,11 +98,12 @@ const containerStyle = {
             geometry={[place.geometry.coordinates[1], place.geometry.coordinates[0]]} 
             options={{
               iconLayout: 'default#image',
-              iconImageHref: 'https://pngicon.ru/file/uploads/vinni-pukh-v-png.png', 
+              iconImageHref: geoObjects.selectedCategories[0].icon, 
               iconImageSize: [32, 24],
             }}
           />
         ))}
+        <RoutePanel />
         </Map>
       </YMaps>
     );

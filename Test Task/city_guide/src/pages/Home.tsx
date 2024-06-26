@@ -6,7 +6,7 @@ const Home = () => {
   
   return (
     <section style={{display: 'flex', flexDirection: 'row'}}>
-      <SidebarF />
+      {/* <SidebarF /> */}
       <MapF />
     </section>
   );
