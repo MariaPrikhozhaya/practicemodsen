@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext } from "react";
-import { YMaps, Map, Placemark, Circle, RoutePanel} from '@pbe/react-yandex-maps';
+import { YMaps, Map, Placemark, Circle} from '@pbe/react-yandex-maps';
 import { useLocation } from "../../hooks/useLocation";
 
 import place from '@assets/vec.png';
@@ -19,33 +19,45 @@ const API_KEY = '860e4b4c-a113-40c5-b8d4-d9656e926e1d';
     const {userLocation, error} = useLocation();
     const geoObjects = useAppSelector(state => state.geoObjectsReducer);
     const dispatch = useAppDispatch();
+    const [obj, setObj] = useState([]);
 
-    
-    const fetchPlaces = async () => {
-      console.log(geoObjects.geoObjects);
-      console.log(geoObjects.selectedCategories);
-      try {
-        const response = await fetch(
-          `https://search-maps.yandex.ru/v1/?text=${geoObjects.selectedCategories.join(', ')}&lang=ru_RU&ll=${userLocation[1]},${userLocation[0]}&apikey=${API_KEY}&spn=1000`
-        );
-        const data = await response.json();
-        console.log(data);
-        setPlaces(data.features);
-      } catch (error) {
-        console.error("Error fetching cafes:", error);
-      }
-    };
-  
     useEffect(() => {
-      fetchPlaces();
-  }, [geoObjects.radius]);
-  
+        getAttractions().then(attractions => setObj(attractions));
+    }, [geoObjects.radius, userLocation, geoObjects.selectedCategories, geoObjects.searchAddress]);
+    
+    // const fetchPlaces = async () => {
+    //   console.log(geoObjects.geoObjects);
+    //   console.log(geoObjects.selectedCategories);
+    //   try {
+    //     const response = await fetch(
+    //       `https://search-maps.yandex.ru/v1/?text=${geoObjects.selectedCategories.join(', ')}&lang=ru_RU&ll=${userLocation[1]},${userLocation[0]}&apikey=${API_KEY}&spn=1000`
+    //     );
+    //     const data = await response.json();
+    //     console.log(data);
+    //     setPlaces(data.features);
+    //   } catch (error) {
+    //     console.error("Error fetching cafes:", error);
+    //   }
+    // };
+    const getAttractions = async () => {
+      let arr = [];
+      for (let i = 0; i < geoObjects.selectedCategories.length; i++) {
+          try {
+              const response = await fetch(`https://search-maps.yandex.ru/v1/?text=${geoObjects.selectedCategories[i].text}&type=biz&lang=ru_RU&apikey=${API_KEY}&rspn=1&ll=${userLocation[1]},${userLocation[0]}&results=100`);
+              const data = await response.json();
+              arr.push({ attractions : data.features, category: geoObjects.selectedCategories[i] }); 
+          } catch (error) {
+              console.error("Error fetching attractions:", error);
+          }
+      }
 
+      return arr;
+  }
 
 
     return (
       <YMaps>
-        <Map 
+        <Map
           state={{
             center: userLocation,
             zoom: 16,
@@ -92,18 +104,20 @@ const API_KEY = '860e4b4c-a113-40c5-b8d4-d9656e926e1d';
                 }}
               />
 
-        {places.map((place) => (
-          <Placemark
-            key={place.id}
-            geometry={[place.geometry.coordinates[1], place.geometry.coordinates[0]]} 
-            options={{
-              iconLayout: 'default#image',
-              iconImageHref: geoObjects.selectedCategories[0].icon, 
-              iconImageSize: [32, 24],
-            }}
-          />
-        ))}
-        <RoutePanel />
+                {obj.length !== 0 && obj.map((place) => (
+                        place.attractions.map((attr) => (
+                            <Placemark
+                                key={attr.id}
+                                geometry={[attr.geometry.coordinates[1], attr.geometry.coordinates[0]]} 
+                                options={{
+                                iconLayout: 'default#image',
+                                iconImageHref: place.category.icon, 
+                                iconImageSize: [32, 32],
+                                }}
+                            />
+                        ))
+                    ))
+                } 
         </Map>
       </YMaps>
     );
