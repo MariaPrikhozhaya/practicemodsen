@@ -15,31 +15,17 @@ const API_KEY = '860e4b4c-a113-40c5-b8d4-d9656e926e1d';
 
   const MapF = () => {
     
-    const [places, setPlaces] = useState([]);
     const {userLocation, error} = useLocation();
     const geoObjects = useAppSelector(state => state.geoObjectsReducer);
     const dispatch = useAppDispatch();
     const [obj, setObj] = useState([]);
 
     useEffect(() => {
-        getAttractions().then(attractions => setObj(attractions));
+      fetchPlaces().then(attractions => setObj(attractions));
     }, [geoObjects.radius, userLocation, geoObjects.selectedCategories, geoObjects.searchAddress]);
     
-    // const fetchPlaces = async () => {
-    //   console.log(geoObjects.geoObjects);
-    //   console.log(geoObjects.selectedCategories);
-    //   try {
-    //     const response = await fetch(
-    //       `https://search-maps.yandex.ru/v1/?text=${geoObjects.selectedCategories.join(', ')}&lang=ru_RU&ll=${userLocation[1]},${userLocation[0]}&apikey=${API_KEY}&spn=1000`
-    //     );
-    //     const data = await response.json();
-    //     console.log(data);
-    //     setPlaces(data.features);
-    //   } catch (error) {
-    //     console.error("Error fetching cafes:", error);
-    //   }
-    // };
-    const getAttractions = async () => {
+
+    const fetchPlaces = async () => {
       let arr = [];
       for (let i = 0; i < geoObjects.selectedCategories.length; i++) {
           try {
