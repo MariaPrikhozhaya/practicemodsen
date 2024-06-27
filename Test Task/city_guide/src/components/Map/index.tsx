@@ -4,6 +4,7 @@ import { useLocation } from "../../hooks/useLocation";
 
 import place from '@assets/vec.png';
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import ObjectInfo from "../ObjectInfo";
 
 const containerStyle = {
     width: '100vw',
@@ -12,6 +13,7 @@ const containerStyle = {
   };
 
 const API_KEY = '860e4b4c-a113-40c5-b8d4-d9656e926e1d';
+const API_KEY2 = 'b22bff34-3caa-4f6b-ae34-fd7ff86d594d';
 
   const MapF = () => {
     
@@ -21,15 +23,18 @@ const API_KEY = '860e4b4c-a113-40c5-b8d4-d9656e926e1d';
     const [obj, setObj] = useState([]);
 
     useEffect(() => {
-      fetchPlaces().then(attractions => setObj(attractions));
-    }, [geoObjects.radius, userLocation, geoObjects.selectedCategories, geoObjects.searchAddress]);
+      if (geoObjects.radius !== 0 && userLocation && geoObjects.selectedCategories)
+          fetchPlaces().then(attractions => setObj(attractions));
+          console.log(obj);
+  }, [geoObjects.radius, userLocation, geoObjects.selectedCategories]);
     
 
     const fetchPlaces = async () => {
       let arr = [];
       for (let i = 0; i < geoObjects.selectedCategories.length; i++) {
           try {
-              const response = await fetch(`https://search-maps.yandex.ru/v1/?text=${geoObjects.selectedCategories[i].text}&type=biz&lang=ru_RU&apikey=${API_KEY}&rspn=1&ll=${userLocation[1]},${userLocation[0]}&results=100`);
+              const radius =geoObjects.radius/111;
+              const response = await fetch(`https://search-maps.yandex.ru/v1/?text=${geoObjects.selectedCategories[i].text}&type=biz&lang=ru_RU&apikey=${API_KEY2}&rspn=1&ll=${userLocation[1]},${userLocation[0]}&spn=${radius},${radius}&results=100`);
               const data = await response.json();
               arr.push({ attractions : data.features, category: geoObjects.selectedCategories[i] }); 
           } catch (error) {
@@ -40,6 +45,12 @@ const API_KEY = '860e4b4c-a113-40c5-b8d4-d9656e926e1d';
       return arr;
   }
 
+  const [selectedPlace, setSelectedPlace] = useState(null);
+
+  const handlePlaceClick = (place) => {
+    setSelectedPlace(place);
+    console.log(selectedPlace);
+  };
 
     return (
       <YMaps>
@@ -90,7 +101,7 @@ const API_KEY = '860e4b4c-a113-40c5-b8d4-d9656e926e1d';
                 }}
               />
 
-                {obj.length !== 0 && obj.map((place) => (
+                {obj.length !== 0 && geoObjects.radius && obj.map((place) => (
                         place.attractions.map((attr) => (
                             <Placemark
                                 key={attr.id}
@@ -99,11 +110,16 @@ const API_KEY = '860e4b4c-a113-40c5-b8d4-d9656e926e1d';
                                 iconLayout: 'default#image',
                                 iconImageHref: place.category.icon, 
                                 iconImageSize: [32, 32],
-                                }}
+                                }
+                              }
+                              onClick={() => handlePlaceClick(attr)}
                             />
                         ))
                     ))
                 } 
+                {selectedPlace && obj.length && (
+                    <ObjectInfo object={selectedPlace} />
+                )}
         </Map>
       </YMaps>
     );
