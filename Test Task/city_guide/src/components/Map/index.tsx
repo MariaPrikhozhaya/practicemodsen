@@ -5,6 +5,7 @@ import { useLocation } from "../../hooks/useLocation";
 import place from '@assets/vec.png';
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import ObjectInfo from "../ObjectInfo";
+import RouteInfo from "../RouteInfo";
 
 const containerStyle = {
     width: '100vw',
@@ -117,10 +118,12 @@ const API_KEY2 = 'b22bff34-3caa-4f6b-ae34-fd7ff86d594d';
                         ))
                     ))
                 } 
-                {selectedPlace && obj.length && (
-                    <ObjectInfo object={selectedPlace} />
-                )}
+                
         </Map>
+        {selectedPlace && obj.length && (
+          <ObjectInfo object={selectedPlace} />
+        )}
+        <RouteInfo />
       </YMaps>
     );
   };
