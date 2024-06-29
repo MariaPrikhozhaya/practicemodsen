@@ -2,18 +2,21 @@ import React from 'react';
 import {
     SCard, SDiv, SDistance, STime, STextValue, STextName
 } from "./styles";
+import { useAppSelector } from '../../hooks/redux';
 
 const RouteInfo = () => {
+
+    const geoObjects = useAppSelector(state => state.geoObjectsReducer);
 
     return (
         <SCard>
             <SDiv>
                 <SDistance>
-                    <STextValue>1,1 km</STextValue>
+                    <STextValue>{geoObjects.route.length} km</STextValue>
                     <STextName>дистанция</STextName>
                 </SDistance>
                 <STime>
-                    <STextValue>40 мин</STextValue>
+                    <STextValue>{geoObjects.route.duration} мин</STextValue>
                     <STextName>примерное время</STextName>
                 </STime>
             </SDiv>

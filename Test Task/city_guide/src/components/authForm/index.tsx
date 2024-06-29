@@ -6,13 +6,11 @@ import { setUser } from "../../store/reducers/userSlice";
 import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup'; // You'll likely need this for validation
+import * as Yup from 'yup';
 
 
 const AuthForm = () => {
 
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -21,7 +19,7 @@ const AuthForm = () => {
 		const auth = getAuth();
 		console.log(email);
 		signInWithEmailAndPassword(auth, email, password)
-		.then(({user}) => {
+	  	.then(({user}) => {
 		  console.log(user);
 		  dispatch(setUser({
 			id: user.uid,
@@ -47,10 +45,10 @@ const AuthForm = () => {
 					})}
 					onSubmit={(values, { setSubmitting }) => {
 						setTimeout(() => {
-						setSubmitting(false);
 						console.log(values.email);
 						handleLogin(values.email, values.password);
-						}, 400);
+						setSubmitting(false);
+						}, 500);
 					}}
 					>
 					{({ isSubmitting, errors, touched }) => (

@@ -19,3 +19,32 @@ export const SA = styled.a`
     whiteSpace: nowrap; 
     overflow: hidden;
 `;
+
+
+export const SButtonFav = styled.button`
+    padding: 7px 14px;
+    font-size: 14px;
+    background: #C75E5E;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    width: 100%;
+`;
+
+export const SButtonRoute = styled.button`
+    padding: 7px 14px;
+    font-size: 14px;
+    background: #5E7BC7;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    width: 100%;
+`;

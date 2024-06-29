@@ -52,7 +52,7 @@ export const SButton = styled.button`
   }
 `;
 
-export const SForm = styled.form`
+export const SForm = styled(Form)`
   width: 320px;
   padding: 30px;
   text-align: center;

@@ -34,7 +34,7 @@ const API_KEY2 = 'b22bff34-3caa-4f6b-ae34-fd7ff86d594d';
       let arr = [];
       for (let i = 0; i < geoObjects.selectedCategories.length; i++) {
           try {
-              const radius =geoObjects.radius/111;
+              const radius = geoObjects.radius/111;
               const response = await fetch(`https://search-maps.yandex.ru/v1/?text=${geoObjects.selectedCategories[i].text}&type=biz&lang=ru_RU&apikey=${API_KEY2}&rspn=1&ll=${userLocation[1]},${userLocation[0]}&spn=${radius},${radius}&results=100`);
               const data = await response.json();
               arr.push({ attractions : data.features, category: geoObjects.selectedCategories[i] }); 
