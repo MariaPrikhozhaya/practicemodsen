@@ -12,6 +12,7 @@ interface GeoObjectsState {
     route: {
         length: number;
         duration: number;
+        arrival: Array<number>
     }
 }
 
@@ -25,7 +26,8 @@ const initialState: GeoObjectsState = {
     searchAddress: '',
     route: {
         length: 0,
-        duration: 0
+        duration: 0,
+        arrival: [0,0]
     }
 };
 
@@ -57,7 +59,7 @@ export const geoObjectsSlice = createSlice({
         setSearchAddress(state, action: PayloadAction<string>) {
             state.searchAddress = action.payload;
         },
-        setRoute(state, action: PayloadAction<{ length: number; duration: number; }>) {
+        setRoute(state, action: PayloadAction<{ length: number; duration: number; arrival: Array<number> }>) {
             state.route = action.payload;
         },
     },

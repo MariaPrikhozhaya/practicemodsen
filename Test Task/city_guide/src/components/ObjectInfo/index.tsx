@@ -18,11 +18,15 @@ const ObjectInfo = ({object}) => {
 
     const onRouteBtnClick = async () => {
         try {
-            const response = await fetch(`https://router.hereapi.com/v8/routes?transportMode=pedestrian&origin=${userLocation[1]},${userLocation[0]}&destination=${object.geometry.coordinates[0]},${object.geometry.coordinates[1]}&return=summary&apikey=3MCN0jdIrJZk-_ShSOiQd-QZjab1yMF6Xz9V2zG6DiI`);
+            //const response = await fetch(`https://router.hereapi.com/v8/routes?transportMode=pedestrian&origin=${userLocation[1]},${userLocation[0]}&destination=${object.geometry.coordinates[0]},${object.geometry.coordinates[1]}&return=summary&apikey=3MCN0jdIrJZk-_ShSOiQd-QZjab1yMF6Xz9V2zG6DiI`);
+            const response = await fetch(`https://router.project-osrm.org/route/v1/walking/${userLocation[1]},${userLocation[0]};${object.geometry.coordinates[0]},${object.geometry.coordinates[1]}?overview=full&geometries=geojson`)    
             const data = await response.json();
-            const length = parseFloat((data.routes[0].sections[0].summary.length / 1000).toFixed(1));
-            const duration = Math.ceil(data.routes[0].sections[0].summary.duration / 60);
-            dispatch(setRoute({ length, duration }));
+            // const length = parseFloat((data.routes[0].sections[0].summary.length / 1000).toFixed(1));
+            // const duration = Math.ceil(data.routes[0].sections[0].summary.duration / 60);
+            const length = parseFloat((data.routes[0].legs[0].distance / 1000).toFixed(1));
+            const duration = Math.ceil(data.routes[0].legs[0].duration / 60);
+            // let arrival = data.routes[0].sections[0].arrival.place.originalLocation;
+            dispatch(setRoute({ length, duration, arrival: [object.geometry.coordinates[1], object.geometry.coordinates[0]]}));
             console.log(data)
             console.log(length)
             console.log(duration)

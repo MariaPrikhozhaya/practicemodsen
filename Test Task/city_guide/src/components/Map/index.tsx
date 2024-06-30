@@ -1,11 +1,12 @@
 import React, {useState, useEffect, useContext } from "react";
-import { YMaps, Map, Placemark, Circle} from '@pbe/react-yandex-maps';
+import { YMaps, Map, Placemark, Circle, Polyline} from '@pbe/react-yandex-maps';
 import { useLocation } from "../../hooks/useLocation";
 
 import place from '@assets/vec.png';
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import ObjectInfo from "../ObjectInfo";
 import RouteInfo from "../RouteInfo";
+
 
 const containerStyle = {
     width: '100vw',
@@ -16,8 +17,9 @@ const containerStyle = {
 const API_KEY = '860e4b4c-a113-40c5-b8d4-d9656e926e1d';
 const API_KEY2 = 'b22bff34-3caa-4f6b-ae34-fd7ff86d594d';
 
+     
   const MapF = () => {
-    
+
     const {userLocation, error} = useLocation();
     const geoObjects = useAppSelector(state => state.geoObjectsReducer);
     const dispatch = useAppDispatch();
@@ -101,7 +103,19 @@ const API_KEY2 = 'b22bff34-3caa-4f6b-ae34-fd7ff86d594d';
                   strokeWidth: 0,
                 }}
               />
-
+            {geoObjects.route.arrival[0] !== 0 && (
+                    <Polyline
+                        geometry={[
+                            userLocation,
+                            geoObjects.route.arrival
+                        ]}
+                        options={{
+                            strokeColor: "#000",
+                            strokeWidth: 4,
+                            strokeOpacity: 0.5,
+                        }}
+                    />
+                )}
                 {obj.length !== 0 && geoObjects.radius && obj.map((place) => (
                         place.attractions.map((attr) => (
                             <Placemark
@@ -126,6 +140,8 @@ const API_KEY2 = 'b22bff34-3caa-4f6b-ae34-fd7ff86d594d';
         <RouteInfo />
       </YMaps>
     );
+
+
   };
   
   export default MapF;
