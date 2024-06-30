@@ -104,17 +104,32 @@ const API_KEY2 = 'b22bff34-3caa-4f6b-ae34-fd7ff86d594d';
                 }}
               />
             {geoObjects.route.arrival[0] !== 0 && (
+                <>
                     <Polyline
                         geometry={[
                             userLocation,
+                            ...geoObjects.route.coord.map(coordinate => coordinate),
                             geoObjects.route.arrival
                         ]}
                         options={{
-                            strokeColor: "#000",
-                            strokeWidth: 4,
-                            strokeOpacity: 0.5,
-                        }}
-                    />
+                          strokeColor: "#C75E5E",
+                          strokeWidth: 7,
+                          strokeOpacity: 0.8
+                      }}
+                      />
+                      <Placemark
+                            geometry={userLocation}
+                            options={{
+                                iconLayout: 'default#image'
+                            }}
+                        />
+                        <Placemark
+                            geometry={geoObjects.route.arrival}
+                            options={{
+                                iconLayout: 'default#image'
+                            }}
+                        />
+                    </>
                 )}
                 {obj.length !== 0 && geoObjects.radius && obj.map((place) => (
                         place.attractions.map((attr) => (
@@ -137,7 +152,6 @@ const API_KEY2 = 'b22bff34-3caa-4f6b-ae34-fd7ff86d594d';
         {selectedPlace && obj.length && (
           <ObjectInfo object={selectedPlace} />
         )}
-        <RouteInfo />
       </YMaps>
     );
 
