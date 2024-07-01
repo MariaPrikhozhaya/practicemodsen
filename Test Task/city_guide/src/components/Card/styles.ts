@@ -25,7 +25,7 @@ export const SCardMedia = styled(CardMedia)`
 export const SCardHeader = styled.p`
     max-width: 120px;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 700;
 `;
 
 export const SText = styled.p`

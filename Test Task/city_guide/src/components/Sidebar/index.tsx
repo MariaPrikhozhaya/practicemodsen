@@ -12,7 +12,8 @@ import Card from '../Card';
 import InfoCard from '../InfoCard';
 import { useAppDispatch } from '../../hooks/redux';
 import { setRadius, setSearchAddress } from '../../store/reducers/geoObjects';
-
+import { FavCollectionRef } from '../../firebase';
+import { getDocs } from "@firebase/firestore"
 
 function SideBarF() {
   const [isSidebarOpenSearch, setIsSidebarOpenSearch] = useState(false);
@@ -30,6 +31,7 @@ function SideBarF() {
       setIsSidebarOpenSearch(false);
     }
     setIsSidebarOpenFav(true);
+    console.log(favorites);
   };
 
   const handleCloseSidebar = () => {
@@ -73,6 +75,16 @@ function SideBarF() {
   const handleButtonClick = (e) => {
   };
 
+  const [favorites, setFavorites] = useState([]);
+  
+  useEffect(() => {
+    const getFavorites = async () => {
+      const data = await getDocs(FavCollectionRef);
+      setFavorites(data.docs.map((elem) => ({...elem.data(), id: elem.id})));
+    }
+
+    getFavorites();
+  }, [])
 
 
   return (
@@ -134,14 +146,9 @@ function SideBarF() {
         </SSearch>
         <p className="text_search">Избранное:</p>
           <SCards>
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <InfoCard />
-            <InfoCard />
-            <InfoCard />
-            <InfoCard />
+          {favorites.map((item) => (
+              <Card key={item.id} itemData={item}/>
+            ))}
             <InfoCard />
           </SCards>
         </div>

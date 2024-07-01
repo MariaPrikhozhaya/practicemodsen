@@ -5,7 +5,7 @@ import {
 } from "./styles";
 import { IoMdArrowDropright, IoMdBookmark } from "react-icons/io";
 
-const Card = () => {
+const Card = ({itemData}) => {
 
   const handleBtnClick = () => {
     
@@ -19,11 +19,14 @@ const Card = () => {
                     component="img"
                     image="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/5e/4f/4d/caption.jpg?w=1200&h=1200&s=1"
                 />
-                <SCardHeader>Парк Челюскинцев</SCardHeader>
+                <SCardHeader>{itemData.name && (itemData.name)}</SCardHeader>
             </SDiv>
-            <SText>Великолепное место для разных видов отдыха и очень хорош для всех возрастов. 
-              Удобно добраться, если нет собственной машины. Транспортная доступность у парка на пять баллов. 
-              Его центральный вход находится в 20-ти метрах от одноименной станции метро.</SText>
+            {itemData.address && (
+              <SText>Адрес: {itemData.address}</SText>
+            )}
+            {itemData.hours && (
+              <SText>Время работы: {itemData.hours}</SText>
+            )}
       </SCardContent>
       <SCardActions>
         <SIconButtonFav>

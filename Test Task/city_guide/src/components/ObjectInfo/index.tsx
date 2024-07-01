@@ -9,6 +9,8 @@ import { setRoute } from '../../store/reducers/geoObjects';
 import { IoMdBookmark } from "react-icons/io";
 import { FaLocationArrow } from "react-icons/fa";
 import RouteInfo from '../RouteInfo';
+import { FavCollectionRef } from '../../firebase';
+import { addDoc } from "@firebase/firestore"
 
 const ObjectInfo = ({object}) => {
 
@@ -41,10 +43,25 @@ const ObjectInfo = ({object}) => {
         }
     }
 
+    const clickOnFavorite = async () => {
+      createFavorite();
+  }
+
+  const createFavorite = async () => {
+      await addDoc(FavCollectionRef, {
+      usrId: "567890fgh", 
+      placeId: object.selectedPlace.properties.CompanyMetaData.id,
+      name: object.selectedPlace.properties.CompanyMetaData.name ? object.selectedPlace.properties.CompanyMetaData.name : null,
+      address: object.selectedPlace.properties.CompanyMetaData.address ? object.selectedPlace.properties.CompanyMetaData.address : null, 
+      hours: object.selectedPlace.properties.CompanyMetaData.Hours ? object.selectedPlace.properties.CompanyMetaData.Hours.text : null, 
+      phone: object.selectedPlace.properties.CompanyMetaData.Phones ? object.selectedPlace.properties.CompanyMetaData.Phones[0].formatted : null, 
+      url: object.selectedPlace.properties.CompanyMetaData.url ? object.selectedPlace.properties.CompanyMetaData.url : null});
+  }
+
   return (
       <>
         <SCard> 
-            <h2>{object.selectedPlace.properties.CompanyMetaData.name}</h2>
+            <text><b>{object.selectedPlace.properties.CompanyMetaData.name}</b></text>
             {!object.isClicked && (
               <>
               {object.selectedPlace.properties.CompanyMetaData.Categories && (
@@ -64,7 +81,7 @@ const ObjectInfo = ({object}) => {
                   {object.selectedPlace.properties.CompanyMetaData.url}      
               </SA></>)}     
               {isAuth && ( 
-                      <SButtonFav>
+                      <SButtonFav onClick={clickOnFavorite}>
                           <IoMdBookmark /> Добавить в избранное
                       </SButtonFav>
                   )}  
