@@ -7,6 +7,11 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import ObjectInfo from "../ObjectInfo";
 import RouteInfo from "../RouteInfo";
 
+import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
+
+import {
+  SMdClose
+} from "./styles";
 
 const containerStyle = {
     width: '100vw',
@@ -24,6 +29,7 @@ const API_KEY2 = 'b22bff34-3caa-4f6b-ae34-fd7ff86d594d';
     const geoObjects = useAppSelector(state => state.geoObjectsReducer);
     const dispatch = useAppDispatch();
     const [obj, setObj] = useState([]);
+    const [isClicked, setClicked] = useState(false);
 
     useEffect(() => {
       if (geoObjects.radius !== 0 && userLocation && geoObjects.selectedCategories)
@@ -31,6 +37,9 @@ const API_KEY2 = 'b22bff34-3caa-4f6b-ae34-fd7ff86d594d';
           console.log(obj);
   }, [geoObjects.radius, userLocation, geoObjects.selectedCategories]);
     
+  const handleIconClick = () => {
+    setClicked(!isClicked);
+  };
 
     const fetchPlaces = async () => {
       let arr = [];
@@ -146,11 +155,15 @@ const API_KEY2 = 'b22bff34-3caa-4f6b-ae34-fd7ff86d594d';
                             />
                         ))
                     ))
-                } 
-                
+                }     
         </Map>
         {selectedPlace && obj.length && (
-          <ObjectInfo object={selectedPlace} />
+            <>
+              <SMdClose onClick={handleIconClick} isShow={isClicked}>
+                {isClicked ? <IoMdArrowDropleft /> : <IoMdArrowDropright />}
+              </SMdClose>
+              <ObjectInfo object={{ selectedPlace, isClicked }} />
+            </>
         )}
       </YMaps>
     );
