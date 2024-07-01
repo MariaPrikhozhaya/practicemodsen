@@ -11,7 +11,7 @@ import logo from '@assets/logo.png';
 import Card from '../Card';
 import InfoCard from '../InfoCard';
 import { useAppDispatch } from '../../hooks/redux';
-import { setRadius, setSearchAddress } from '../../store/reducers/geoObjects';
+import { setRadius, setSearchAddress, setLoading } from '../../store/reducers/geoObjects';
 import { FavCollectionRef } from '../../firebase';
 import { getDocs } from "@firebase/firestore"
 
@@ -73,6 +73,7 @@ function SideBarF() {
   };
 
   const handleButtonClick = (e) => {
+    dispatch(setLoading(true));
   };
 
   const [favorites, setFavorites] = useState([]);
@@ -82,7 +83,6 @@ function SideBarF() {
       const data = await getDocs(FavCollectionRef);
       setFavorites(data.docs.map((elem) => ({...elem.data(), id: elem.id})));
     }
-
     getFavorites();
   }, [])
 

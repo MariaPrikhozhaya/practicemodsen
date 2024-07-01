@@ -37,6 +37,9 @@ export const geoObjectsSlice = createSlice({
     name: 'geo_objects',
     initialState,
     reducers: {
+        setLoading(state, action: PayloadAction<boolean>) {
+            state.isLoading = action.payload;
+        },
         setCoordinates(state, action: PayloadAction<Array<number>>) {
             state.coordinates = action.payload;
         },
@@ -69,6 +72,7 @@ export const geoObjectsSlice = createSlice({
 })
 
 export const {
+    setLoading,
     setCoordinates,
     setRadius,
     setSelectedCategories,

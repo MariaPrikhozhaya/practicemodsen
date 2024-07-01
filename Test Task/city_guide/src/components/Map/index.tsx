@@ -12,6 +12,7 @@ import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
 import {
   SMdClose
 } from "./styles";
+import { setLoading } from '../../store/reducers/geoObjects';
 
 const containerStyle = {
     width: '100vw',
@@ -32,10 +33,11 @@ const API_KEY2 = 'b22bff34-3caa-4f6b-ae34-fd7ff86d594d';
     const [isClicked, setClicked] = useState(false);
 
     useEffect(() => {
-      if (geoObjects.radius !== 0 && userLocation && geoObjects.selectedCategories)
+      if (geoObjects.radius !== 0 && userLocation && geoObjects.selectedCategories && geoObjects.isLoading)
           fetchPlaces().then(attractions => setObj(attractions));
+          dispatch(setLoading(false));
           console.log(obj);
-  }, [geoObjects.radius, userLocation, geoObjects.selectedCategories]);
+  }, [geoObjects.radius, userLocation, geoObjects.selectedCategories, geoObjects.isLoading]);
     
   const handleIconClick = () => {
     setClicked(!isClicked);
