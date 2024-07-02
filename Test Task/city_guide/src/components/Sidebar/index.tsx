@@ -89,7 +89,7 @@ const fetchFavorites  = async () => {
     const q = query(FavCollectionRef, where("usrId", "==", user.id));
     const data = await getDocs(q);
     const favorites: Favorites[] = data.docs.map((elem) => ({
-      objectId: elem.data().placeId, // Make sure these field names match your Firestore
+      objectId: elem.data().placeId,
       name: elem.data().name, 
       address: elem.data().address,
       hours: elem.data().hours,
