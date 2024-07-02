@@ -1,17 +1,11 @@
 import React, {useState, useEffect, useContext } from "react";
 import { YMaps, Map, Placemark, Circle, Polyline} from '@pbe/react-yandex-maps';
 import { useLocation } from "../../hooks/useLocation";
-
 import place from '@assets/vec.png';
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import ObjectInfo from "../ObjectInfo";
-import RouteInfo from "../RouteInfo";
-
 import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
-
-import {
-  SMdClose
-} from "./styles";
+import { SMdClose } from "./styles";
 import { setLoading } from '../../store/reducers/geoObjects';
 
 const containerStyle = {

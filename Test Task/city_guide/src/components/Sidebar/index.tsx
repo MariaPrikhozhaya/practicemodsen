@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { setRadius, setSearchAddress, setLoading, setFavorites } from '../../store/reducers/geoObjects';
 import { FavCollectionRef } from '../../firebase';
 import { useAuth } from "../../hooks/useAuth";
-import { query, where, getDocs, collection } from "firebase/firestore";
+import { query, where, getDocs } from "firebase/firestore";
 import { Favorites } from '../../store/reducers/geoObjects';
 
 function SideBarF() {

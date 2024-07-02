@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { MdArrowBack } from "react-icons/md";
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Form, Field, ErrorMessage } from 'formik';
 
 export const SField = styled(Field)`
   width: 94%;

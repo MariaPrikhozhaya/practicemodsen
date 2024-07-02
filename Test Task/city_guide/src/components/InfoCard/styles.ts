@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CardMedia, IconButton } from '@mui/material';
+import { CardMedia } from '@mui/material';
 
 export const SCard = styled.div`
     border: 3px solid #C4C4C4;

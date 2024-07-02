@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-    SCard, SA, SButtonFav, SButtonRoute
-} from "./styles";
+import { SCard, SA, SButtonFav, SButtonRoute } from "./styles";
 import { useLocation } from "../../hooks/useLocation";
 import { useAuth } from "../../hooks/useAuth";
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';

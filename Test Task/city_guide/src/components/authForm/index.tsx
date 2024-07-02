@@ -1,16 +1,15 @@
-import React, { useState, useContext} from "react"
+import React from "react"
 import { SBlock, SButton,  SForm, STitle, 
 	SMainBlock, SText, SLink, SRow, SMdArrowBack, SField, SErrorMessage } from "./styles"
 import { useDispatch } from "react-redux";
 import { setUser } from "../../store/reducers/userSlice";
 import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik} from 'formik';
 import * as Yup from 'yup';
 
 
 const AuthForm = () => {
-
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();

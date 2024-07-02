@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { CardMedia, IconButton } from '@mui/material';
 
 export const SCard = styled.div`
     position: absolute;

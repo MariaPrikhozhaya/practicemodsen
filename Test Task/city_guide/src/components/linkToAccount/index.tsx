@@ -1,8 +1,6 @@
-import React, {useState} from "react";
+import React from "react";
 import { Avatar } from '@mui/material';
-import {
-  SAvatar, SButton
-} from "./styles";
+import { SAvatar, SButton } from "./styles";
 import { useAuth } from "../../hooks/useAuth";
 import { useAppDispatch } from "../../hooks/redux";
 import { removeUser } from "../../store/reducers/userSlice";
@@ -10,7 +8,7 @@ import login from '@assets/login.png'
 
 const LinkAccount = () => {
   
-  const {isAuth, email} = useAuth();
+  const {isAuth} = useAuth();
     const dispatch = useAppDispatch();
 
     return (
