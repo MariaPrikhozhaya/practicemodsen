@@ -4,11 +4,16 @@ import {
     SIconButtonFav, SIconButtonArrow, SCardActions, SCardContent
 } from "./styles";
 import { IoMdArrowDropright, IoMdBookmark } from "react-icons/io";
+import { setShow } from '../../store/reducers/geoObjects';
+import { useAppDispatch } from '../../hooks/redux';
 
 const Card = ({itemData}) => {
 
+
+  const dispatch = useAppDispatch();
+
   const handleBtnClick = () => {
-    
+    dispatch(setShow(true));
   };
 
   return (

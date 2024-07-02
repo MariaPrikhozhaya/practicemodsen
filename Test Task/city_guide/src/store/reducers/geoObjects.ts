@@ -4,6 +4,7 @@ import { IIcon } from '../../constants/categories';
 interface GeoObjectsState {
     geoObjects: any;
     isLoading: boolean;
+    isShow: boolean;
     error: string;
     coordinates: Array<number>
     radius: number,
@@ -20,6 +21,7 @@ interface GeoObjectsState {
 const initialState: GeoObjectsState = {
     geoObjects: [],
     isLoading: false,
+    isShow: false,
     error: '',
     coordinates: [0,0],
     radius: 0,
@@ -39,6 +41,9 @@ export const geoObjectsSlice = createSlice({
     reducers: {
         setLoading(state, action: PayloadAction<boolean>) {
             state.isLoading = action.payload;
+        },
+        setShow(state, action: PayloadAction<boolean>) {
+            state.isShow = action.payload;
         },
         setCoordinates(state, action: PayloadAction<Array<number>>) {
             state.coordinates = action.payload;
@@ -73,6 +78,7 @@ export const geoObjectsSlice = createSlice({
 
 export const {
     setLoading,
+    setShow,
     setCoordinates,
     setRadius,
     setSelectedCategories,

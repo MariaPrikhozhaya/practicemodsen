@@ -4,7 +4,7 @@ import {
 } from "./styles";
 import { useLocation } from "../../hooks/useLocation";
 import { useAuth } from "../../hooks/useAuth";
-import { useAppDispatch } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { setRoute } from '../../store/reducers/geoObjects';
 import { IoMdBookmark } from "react-icons/io";
 import { FaLocationArrow } from "react-icons/fa";
@@ -12,12 +12,14 @@ import RouteInfo from '../RouteInfo';
 import { FavCollectionRef } from '../../firebase';
 import { addDoc } from "@firebase/firestore"
 
+
 const ObjectInfo = ({object}) => {
 
   const {isAuth, email} = useAuth();
     const {userLocation, error} = useLocation();
     const dispatch = useAppDispatch();
     const [showCard, setShowCard] = useState(true);
+    const user = useAppSelector(state => state.userReducer);
 
     useEffect(() => {
       if (object.selectedPlace)
@@ -38,6 +40,7 @@ const ObjectInfo = ({object}) => {
             console.log(duration)
             console.log(userLocation[1] + " " + userLocation[0])
             console.log(object.selectedPlace.geometry.coordinates[0] + " " + object.selectedPlace.geometry.coordinates[1])
+            console.log(user.id)
         } catch (error) {
             console.error("Error getting data:", error);
         }
@@ -49,7 +52,7 @@ const ObjectInfo = ({object}) => {
 
   const createFavorite = async () => {
       await addDoc(FavCollectionRef, {
-      usrId: "567890fgh", 
+      usrId: user.id, 
       placeId: object.selectedPlace.properties.CompanyMetaData.id,
       name: object.selectedPlace.properties.CompanyMetaData.name ? object.selectedPlace.properties.CompanyMetaData.name : null,
       address: object.selectedPlace.properties.CompanyMetaData.address ? object.selectedPlace.properties.CompanyMetaData.address : null, 

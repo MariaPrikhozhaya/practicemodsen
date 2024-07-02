@@ -10,10 +10,11 @@ import CategoryList from '../ListOfCategories';
 import logo from '@assets/logo.png';
 import Card from '../Card';
 import InfoCard from '../InfoCard';
-import { useAppDispatch } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { setRadius, setSearchAddress, setLoading } from '../../store/reducers/geoObjects';
 import { FavCollectionRef } from '../../firebase';
 import { getDocs } from "@firebase/firestore"
+import { useAuth } from "../../hooks/useAuth";
 
 function SideBarF() {
   const [isSidebarOpenSearch, setIsSidebarOpenSearch] = useState(false);
@@ -72,19 +73,26 @@ function SideBarF() {
     setAddressInput(e.target.value);
   };
 
-  const handleButtonClick = (e) => {
+  const handleButtonClick = () => {
     dispatch(setLoading(true));
   };
 
   const [favorites, setFavorites] = useState([]);
+  const user = useAppSelector(state => state.userReducer);
+  const geoObjects = useAppSelector(state => state.geoObjectsReducer);
+  const {isAuth, email} = useAuth();
+  
   
   useEffect(() => {
+    if(isAuth) {
     const getFavorites = async () => {
       const data = await getDocs(FavCollectionRef);
-      setFavorites(data.docs.map((elem) => ({...elem.data(), id: elem.id})));
+      const filteredFavorites = data.docs.filter((elem) => elem.data().usrId === user.id).map((elem) => ({...elem.data(), id: elem.id}));
+      setFavorites(filteredFavorites);
     }
     getFavorites();
-  }, [])
+  }
+  }, [favorites, isAuth])
 
 
   return (
@@ -98,9 +106,12 @@ function SideBarF() {
             <HiMiniMagnifyingGlass />
           </SButtonSearch>
           
+
+          {isAuth && (
           <SButtonFav className='icon_cont fav' onClick={handleOpenSidebarFav} open={isSidebarOpenFav}>
             <IoMdBookmark />
           </SButtonFav>
+          )}
 
         </div>
 
@@ -144,13 +155,18 @@ function SideBarF() {
           </SSearchIcon>
           <input type="text" placeholder="Место, адрес.." value={addressInput} onChange={handleInputChange}/>
         </SSearch>
+
+      {!geoObjects.isShow ? (
+      <>
         <p className="text_search">Избранное:</p>
           <SCards>
           {favorites.map((item) => (
               <Card key={item.id} itemData={item}/>
             ))}
-            <InfoCard />
           </SCards>
+          </>
+      ) : <InfoCard />}
+
         </div>
 
         <button className="btn_close" onClick={handleCloseSidebar}>
