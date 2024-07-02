@@ -11,10 +11,11 @@ import logo from '@assets/logo.png';
 import Card from '../Card';
 import InfoCard from '../InfoCard';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { setRadius, setSearchAddress, setLoading } from '../../store/reducers/geoObjects';
+import { setRadius, setSearchAddress, setLoading, setFavorites } from '../../store/reducers/geoObjects';
 import { FavCollectionRef } from '../../firebase';
-import { getDocs } from "@firebase/firestore"
 import { useAuth } from "../../hooks/useAuth";
+import { query, where, getDocs, collection } from "firebase/firestore";
+import { Favorites } from '../../store/reducers/geoObjects';
 
 function SideBarF() {
   const [isSidebarOpenSearch, setIsSidebarOpenSearch] = useState(false);
@@ -32,7 +33,6 @@ function SideBarF() {
       setIsSidebarOpenSearch(false);
     }
     setIsSidebarOpenFav(true);
-    console.log(favorites);
   };
 
   const handleCloseSidebar = () => {
@@ -63,12 +63,12 @@ function SideBarF() {
 
   const handleInputRadius = (e) => {
     if (e.key === "-" || e.key === "+") {
-      e.preventDefault(); // Предотвращает ввод знаков "-" и "+"
+      e.preventDefault();
     }
     setRadiusInput(Number(e.target.value));
   };
 
-  // Function to handle search input change
+
   const handleInputChange = (e) => {
     setAddressInput(e.target.value);
   };
@@ -77,23 +77,38 @@ function SideBarF() {
     dispatch(setLoading(true));
   };
 
-  const [favorites, setFavorites] = useState([]);
+  // const [favorites, setFavorites] = useState([]);
   const user = useAppSelector(state => state.userReducer);
   const geoObjects = useAppSelector(state => state.geoObjectsReducer);
   const {isAuth, email} = useAuth();
   
-  
-  useEffect(() => {
-    if(isAuth) {
-    const getFavorites = async () => {
-      const data = await getDocs(FavCollectionRef);
-      const filteredFavorites = data.docs.filter((elem) => elem.data().usrId === user.id).map((elem) => ({...elem.data(), id: elem.id}));
-      setFavorites(filteredFavorites);
-    }
-    getFavorites();
-  }
-  }, [favorites, isAuth])
 
+
+const fetchFavorites  = async () => {
+  try {
+    const q = query(FavCollectionRef, where("usrId", "==", user.id));
+    const data = await getDocs(q);
+    const favorites: Favorites[] = data.docs.map((elem) => ({
+      objectId: elem.data().placeId, // Make sure these field names match your Firestore
+      name: elem.data().name, 
+      address: elem.data().address,
+      hours: elem.data().hours,
+      phone: elem.data().phone,
+      url: elem.data().url,
+      id: elem.id 
+    }));
+    dispatch(setFavorites(favorites));
+    console.log(geoObjects.favorites);
+  } catch (error) {
+    console.error("Error fetching favorites:", error);
+  }
+};
+
+  useEffect(() => {
+    if (isAuth) {
+      fetchFavorites();
+    }
+  }, [isAuth]);
 
   return (
     <div className="app">
@@ -160,8 +175,8 @@ function SideBarF() {
       <>
         <p className="text_search">Избранное:</p>
           <SCards>
-          {favorites.map((item) => (
-              <Card key={item.id} itemData={item}/>
+          {geoObjects.favorites.map((item) => (
+              <Card key={item.objectId} itemData={item}/>
             ))}
           </SCards>
           </>

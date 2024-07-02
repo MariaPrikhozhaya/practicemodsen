@@ -1,6 +1,16 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import { IIcon } from '../../constants/categories';
 
+export interface Favorites {
+    objectId: string,
+    name: string;
+    address: string;
+    hours: string;
+    phone: string;
+    url: string;
+}
+
+
 interface GeoObjectsState {
     geoObjects: any;
     isLoading: boolean;
@@ -16,6 +26,7 @@ interface GeoObjectsState {
         arrival: Array<number>;
         coord: Array<Array<number>>
     }
+    favorites: Array<Favorites>
 }
 
 const initialState: GeoObjectsState = {
@@ -32,7 +43,8 @@ const initialState: GeoObjectsState = {
         duration: 0,
         arrival: [0,0],
         coord: []
-    }
+    },
+    favorites: []
 };
 
 export const geoObjectsSlice = createSlice({
@@ -73,6 +85,9 @@ export const geoObjectsSlice = createSlice({
             arrival: Array<number>, coord: Array<Array<number>> }>) {
             state.route = action.payload;
         },
+        setFavorites(state, action: PayloadAction<Array<Favorites>>) {
+            state.favorites = action.payload;
+        },
     },
 })
 
@@ -83,7 +98,8 @@ export const {
     setRadius,
     setSelectedCategories,
     setSearchAddress,
-    setRoute
+    setRoute,
+    setFavorites
 } = geoObjectsSlice.actions;
 
 export default geoObjectsSlice.reducer;
