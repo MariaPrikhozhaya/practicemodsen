@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { categories } from '../../constants/categories';
-import {
-  SList, SLi, SAvatar, SBlock
-} from "./styles";
+import { SList, SLi, SAvatar, SBlock } from "./styles";
 import { useAppDispatch } from '../../hooks/redux';
 import { setSelectedCategories } from '../../store/reducers/geoObjects';
-
-
-
 
 const CategoryList = () => {
 

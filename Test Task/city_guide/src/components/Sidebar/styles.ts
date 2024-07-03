@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-
 export const SSearch = styled.div`
     background: rgba(250,250,250,.3);
     border: 2px solid #C4C4C4;

@@ -1,12 +1,11 @@
 import styled from "styled-components";
-import { Card, CardContent, CardHeader, CardMedia, IconButton, Typography, CardActions } from '@mui/material';
+import { CardMedia, IconButton } from '@mui/material';
 
 export const SCard = styled.div`
     border: 2px solid #C4C4C4;
     border-radius: 6px;
     width: 264px;
     margin-bottom: 15px;
-  
 `;
 
 export const SDiv = styled.div`
@@ -25,7 +24,7 @@ export const SCardMedia = styled(CardMedia)`
 export const SCardHeader = styled.p`
     max-width: 120px;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 700;
 `;
 
 export const SText = styled.p`

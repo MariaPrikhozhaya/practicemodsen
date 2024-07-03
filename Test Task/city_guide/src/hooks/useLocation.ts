@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from "./redux";
 
 const API_KEY = 'd40d7ec9-f5ab-4c2d-8515-179c8f0fadd5';
 
-
 export const useLocation = () => {
 
 
