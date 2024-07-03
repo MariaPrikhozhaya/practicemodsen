@@ -8,12 +8,6 @@ import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
 import { SMdClose } from "./styles";
 import { setLoading } from '../../store/reducers/geoObjects';
 
-const containerStyle = {
-    width: '100vw',
-    height: '100vh',
-    position: 'absolute',
-  };
-
 const API_KEY = '860e4b4c-a113-40c5-b8d4-d9656e926e1d';
 const API_KEY2 = 'b22bff34-3caa-4f6b-ae34-fd7ff86d594d';
 
@@ -60,24 +54,14 @@ const API_KEY2 = 'b22bff34-3caa-4f6b-ae34-fd7ff86d594d';
     console.log(selectedPlace);
   };
 
+  const [center, setCenter] = useState(userLocation);
+
     return (
-      <YMaps>
-        <Map
-          state={{
-            center: userLocation,
-            zoom: 16,
-            // Опция "on" позволяет реагировать на изменение userLocation
-            // @ts-expect-error TS(2322): Type '{ center: any; zoom: number; on: { userLocat... Remove this comment to see the full error message
-            on: {
-              userLocationChange: (event) => {
-                // @ts-expect-error TS(2532): Object is possibly 'undefined'.
-                this.setState({ center: event.value });
-              },
-            },
-          }}
-          // @ts-expect-error TS(2322): Type '{ width: string; height: string; position: s... Remove this comment to see the full error message
-          style={containerStyle}
-        >
+      <YMaps >
+            <Map
+                state={{center: userLocation, zoom: 16}}
+                style={{width: '100vw', height: '100vh', position: 'absolute'}} 
+            >
           {userLocation && (
               <Placemark
                 geometry={userLocation}
