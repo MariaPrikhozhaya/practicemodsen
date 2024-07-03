@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom"
 import { MdArrowBack } from "react-icons/md";
+import { Form, Field, ErrorMessage } from 'formik';
 
-export const SInput = styled.input`
+export const SField = styled(Field)`
   width: 94%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -17,6 +18,17 @@ export const SInput = styled.input`
     background-color: #fff;
     box-shadow: none;
   }
+  &.error {
+    border-color: red;
+  }
+  &.valid {
+    border-color: green;
+  }
+`;
+
+export const SErrorMessage = styled(ErrorMessage)`
+  color: red;
+  font-size: 14px;
 `;
 
 export const SBlock = styled.div`
@@ -38,7 +50,7 @@ export const SButton = styled.button`
   }
 `;
 
-export const SForm = styled.form`
+export const SForm = styled(Form)`
   width: 320px;
   padding: 30px;
   text-align: center;

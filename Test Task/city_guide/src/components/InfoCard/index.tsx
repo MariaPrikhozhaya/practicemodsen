@@ -13,11 +13,12 @@ const InfoCard = () => {
         <SCardContent>
             <SCardMedia
                 component="img"
-                image="https://masterpiecer-images.s3.yandex.net/c352b1b9801c11ee9607720ccb3e265f:upscaled"
+                image="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/5e/4f/4d/caption.jpg?w=1200&h=1200&s=1"
             />
-            <SCardHeader>Фантаcмагарический музей им. П.М. Машерова</SCardHeader>
-            <SText>Lörem ipsum jere. Intrabel peraktiv pävufåsk läslov pide. Exon prelogi. 
-                Någonstansare  begöpp. Homoadoption tesände keck såsom köttrymden. Epigen digon fast</SText>
+            <SCardHeader>Парк Челюскинцев</SCardHeader>
+            <SText>Великолепное место для разных видов отдыха и очень хорош для всех возрастов. 
+                Удобно добраться, если нет собственной машины. Транспортная доступность у парка на пять баллов. 
+                Его центральный вход находится в 20-ти метрах от одноименной станции метро.</SText>
         </SCardContent>
         <SCardActions>
         <SButtonFav>

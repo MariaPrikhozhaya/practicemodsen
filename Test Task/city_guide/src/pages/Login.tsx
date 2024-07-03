@@ -1,9 +1,8 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 import AuthForm from "../components/AuthForm";
 
 
 const Login = () => {
-
 	return (
 		<AuthForm/>
 	)
