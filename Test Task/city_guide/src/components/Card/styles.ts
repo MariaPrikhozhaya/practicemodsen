@@ -58,33 +58,3 @@ export const SCardContent = styled.div`
   padding: 10px 10px 0 10px;
 `;
 
-export const SText = styled.p`
-    font-size: 10px;
-    justify-content: space-between;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-`;
-
-export const SIconButtonFav = styled(IconButton)`
-    svg {
-        color: #C75E5E;
-    }
-`;
-
-export const SIconButtonArrow = styled(IconButton)`
-    svg {
-        color: #373737;
-    }
-`;
-
-export const SCardActions = styled.div`
-    display: flex;
-    justify-content: space-between;
-`;
-
-export const SCardContent = styled.div`
-    padding: 10px 10px 0 10px;
-`;
