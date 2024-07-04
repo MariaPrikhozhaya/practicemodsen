@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { MdArrowBack } from "react-icons/md";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { MdArrowBack } from 'react-icons/md';
 import { Form, Field, ErrorMessage } from 'formik';
 
 export const SField = styled(Field)`
@@ -32,7 +32,7 @@ export const SErrorMessage = styled(ErrorMessage)`
 `;
 
 export const SBlock = styled.div`
-  display: flex; 
+  display: flex;
   flex-direction: column;
 `;
 
@@ -42,7 +42,7 @@ export const SButton = styled.button`
   padding: 15px;
   border: none;
   font-size: 20px;
-  background: #5E7BC7;
+  background: #5e7bc7;
   color: #fff;
   &:hover {
     background: #6176ab;
@@ -55,7 +55,7 @@ export const SForm = styled(Form)`
   padding: 30px;
   text-align: center;
   background: #fff;
-  box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+  box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
 `;
 
 export const STitle = styled.h2`
@@ -63,14 +63,13 @@ export const STitle = styled.h2`
   font-weight: 400;
 `;
 
-
 export const SMainBlock = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: #ebf3fc;
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
 `;
 
 export const SText = styled.text`
